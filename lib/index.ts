@@ -4,7 +4,7 @@ import * as cognito from '@aws-cdk/aws-cognito'
 import { GoFunction } from '@aws-cdk/aws-lambda-go'
 
 export interface PasswordlessAuthProps {
-  // Define construct properties here
+  clientName?: string;
 }
 
 export class PasswordlessAuth extends cdk.Construct {
@@ -54,7 +54,7 @@ export class PasswordlessAuth extends cdk.Construct {
     })
 
     this.userPoolClient = new cognito.UserPoolClient(this, 'UserPoolClient', {
-      userPoolClientName: 'sms-auth-client',
+      userPoolClientName: props.clientName ?? 'sms-auth-client',
       generateSecret: false,
       userPool: this.userPool,
       authFlows: { custom: true }
