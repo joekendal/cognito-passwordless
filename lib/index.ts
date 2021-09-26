@@ -1,6 +1,8 @@
 import * as cdk from '@aws-cdk/core';
 import * as cognito from '@aws-cdk/aws-cognito'
 
+import { GoFunction } from '@aws-cdk/aws-lambda-go'
+
 export interface PasswordlessAuthProps {
   // Define construct properties here
 }
@@ -11,6 +13,14 @@ export class PasswordlessAuth extends cdk.Construct {
 
   constructor(scope: cdk.Construct, id: string, props: PasswordlessAuthProps = {}) {
     super(scope, id);
+
+    const preSignUp = new GoFunction(this, 'PreSignup', {
+      entry: 'functions/pre-signup'
+    })
+
+    const defineAuthChallenge = new GoFunction(this, 'DefineAuthChallenge', {
+      entry: 'functions/define-auth-challenge'
+    })
 
     this.userPool = new cognito.UserPool(this, 'UserPool', {
       standardAttributes: {
@@ -28,7 +38,8 @@ export class PasswordlessAuth extends cdk.Construct {
       signInAliases: { phone: true, email: false, username: false },
       mfa: cognito.Mfa.OFF,
       lambdaTriggers: {
-
+        preSignUp,
+        defineAuthChallenge
       }
     })
 

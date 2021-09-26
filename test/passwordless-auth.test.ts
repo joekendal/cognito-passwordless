@@ -57,10 +57,10 @@ describe('AWS::Cognito::UserPool', () => {
   })
 
   // test('Lambda triggers', () => {
-  //   const createAuthArn = Capture.aString()
+  //   const preSignUpArn = Capture.aString()
   //   expectCDK(stack).to(haveResourceLike('AWS::Cognito::UserPool', {
   //     LambdaConfig: {
-  //       CreateAuthChallenge: createAuthArn.capture()
+  //       PreSignUp: preSignUpArn.capture()
   //     }
   //   }))
   // })
