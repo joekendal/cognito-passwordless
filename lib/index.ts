@@ -26,6 +26,10 @@ export class PasswordlessAuth extends cdk.Construct {
       entry: 'functions/create-auth-challenge'
     })
 
+    const verifyAuthChallenge = new GoFunction(this, 'VerifyAuthChallenge', {
+      entry: 'functions/verify-auth-challenge'
+    })
+
     this.userPool = new cognito.UserPool(this, 'UserPool', {
       standardAttributes: {
         phoneNumber: { required: true, mutable: true },
@@ -44,7 +48,8 @@ export class PasswordlessAuth extends cdk.Construct {
       lambdaTriggers: {
         preSignUp,
         defineAuthChallenge,
-        createAuthChallenge
+        createAuthChallenge,
+        verifyAuthChallenge
       }
     })
 
