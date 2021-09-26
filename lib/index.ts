@@ -1,5 +1,6 @@
 import * as cdk from '@aws-cdk/core';
 import * as cognito from '@aws-cdk/aws-cognito'
+import * as iam from '@aws-cdk/aws-iam'
 
 import { GoFunction } from '@aws-cdk/aws-lambda-go'
 
@@ -25,6 +26,11 @@ export class PasswordlessAuth extends cdk.Construct {
     const createAuthChallenge = new GoFunction(this, 'CreateAuthChallenge', {
       entry: 'functions/create-auth-challenge'
     })
+    createAuthChallenge.addToRolePolicy(new iam.PolicyStatement({
+      effect: iam.Effect.ALLOW,
+      actions: ['mobiletargeting:*', 'sns:*'],
+      resources: ['*']
+    }))
 
     const verifyAuthChallenge = new GoFunction(this, 'VerifyAuthChallenge', {
       entry: 'functions/verify-auth-challenge'
@@ -53,11 +59,21 @@ export class PasswordlessAuth extends cdk.Construct {
       }
     })
 
+    new cdk.CfnOutput(this, 'UserPoolId', {
+      value: this.userPool.userPoolId,
+      description: 'ID of the User Pool'
+    })
+
     this.userPoolClient = new cognito.UserPoolClient(this, 'UserPoolClient', {
       userPoolClientName: props.clientName ?? 'sms-auth-client',
       generateSecret: false,
       userPool: this.userPool,
       authFlows: { custom: true }
+    })
+
+    new cdk.CfnOutput(this, 'UserPoolClientId', {
+      value: this.userPoolClient.userPoolClientId,
+      description: 'ID of the User Pool Client'
     })
 
   }
