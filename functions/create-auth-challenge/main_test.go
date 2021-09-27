@@ -19,6 +19,16 @@ func (m *mockSvc) Publish(*sns.PublishInput) (*sns.PublishOutput, error) {
 	return &sns.PublishOutput{}, nil
 }
 
+func TestGenerateOTP(t *testing.T) {
+	code, err := main.GenerateOTP()
+	if err != nil {
+		log.Fatal(err)
+	}
+	if len(code) != 6 {
+		log.Fatal("Expected code of length 6")
+	}
+}
+
 func TestHandler(t *testing.T) {
 	testPhone := "+11111111111"
 	event, err := main.Handler(events.CognitoEventUserPoolsCreateAuthChallenge{
