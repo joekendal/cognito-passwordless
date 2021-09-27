@@ -1,20 +1,22 @@
 import { expect as expectCDK, countResources, haveResource, haveResourceLike, Capture } from '@aws-cdk/assert';
 import * as cdk from '@aws-cdk/core';
-import * as PasswordlessAuth from '../lib/index';
+import * as CognitoPasswordless from '../lib/index';
+
+
+let app: cdk.App;
+let stack: cdk.Stack;
+
+// Setup
+beforeAll(() => {
+  app = new cdk.App();
+  stack = new cdk.Stack(app, "TestStack")
+  new CognitoPasswordless.Passwordless(stack, 'MyTestConstruct')
+})
 
 /**
  * Cognito user pool
  */
 describe('AWS::Cognito::UserPool', () => {
-  let app: cdk.App;
-  let stack: cdk.Stack;
-
-  // Setup
-  beforeAll(() => {
-    app = new cdk.App();
-    stack = new cdk.Stack(app, "TestStack")
-    new PasswordlessAuth.PasswordlessAuth(stack, 'MyTestConstruct')
-  })
 
   test('UserPool Created', () => {
     expectCDK(stack).to(countResources("AWS::Cognito::UserPool", 1));
@@ -56,21 +58,23 @@ describe('AWS::Cognito::UserPool', () => {
     }))
   })
 
-  // test('Lambda triggers', () => {
-  //   const preSignUpArn = Capture.aString()
-  //   expectCDK(stack).to(haveResourceLike('AWS::Cognito::UserPool', {
-  //     LambdaConfig: {
-  //       PreSignUp: preSignUpArn.capture()
-  //     }
-  //   }))
-  // })
+  test('Lambda triggers', () => {
+    expectCDK(stack).to(haveResourceLike('AWS::Cognito::UserPool', {
+      LambdaConfig: {
+        CreateAuthChallenge: {},
+        DefineAuthChallenge: {},
+        PreSignUp: {},
+        VerifyAuthChallengeResponse: {}
+      }
+    }))
+  })
 
 })
 
+/**
+ * Cognito app client
+ */
 test('AWS::Cognito::UserPoolClient', () => {
-  const app = new cdk.App();
-  const stack = new cdk.Stack(app, "TestStack")
-  new PasswordlessAuth.PasswordlessAuth(stack, 'MyTestConstruct')
 
   expectCDK(stack).to(haveResource('AWS::Cognito::UserPoolClient', {
     ClientName: 'sms-auth-client',
@@ -80,3 +84,12 @@ test('AWS::Cognito::UserPoolClient', () => {
 })
 
 
+/**
+ * Cognito lambda triggers
+ */
+describe('AWS::Serverless::Function', () => {
+
+  test('should have cognito triggers', () => {
+    expectCDK(stack).to(countResources('AWS::Lambda::Function', 4))
+  })
+})
