@@ -29,6 +29,13 @@ func TestGenerateOTP(t *testing.T) {
 	}
 }
 
+func TestSendSMS(t *testing.T) {
+	err := main.SendSMS("Test message", "+11111111111")
+	if err != nil {
+		log.Fatal("SendSMS should accept the string args")
+	}
+}
+
 func TestHandler(t *testing.T) {
 	testPhone := "+11111111111"
 	event, err := main.Handler(events.CognitoEventUserPoolsCreateAuthChallenge{
