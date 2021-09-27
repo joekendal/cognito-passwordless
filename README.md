@@ -1,1 +1,1 @@
-[![lambdas](https://github.com/CloudClinics/cognito-passwordless/actions/workflows/test-lambdas.yml/badge.svg)](https://github.com/CloudClinics/cognito-passwordless/actions/workflows/test-lambdas.yml)
+
