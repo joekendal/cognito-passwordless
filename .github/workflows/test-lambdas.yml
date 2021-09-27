@@ -1,0 +1,35 @@
+name: lambdas
+
+on:
+  push:
+    paths:
+      - 'functions/**'
+    branches: [ main ]
+  pull_request:
+    paths:
+      - 'functions/**'
+    branches: [ main ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.17
+
+    - name: Test Create Auth Challenge
+      run: cd functions/create-auth-challenge && go test -v
+      
+    - name: Test Define Auth Challenge
+      run: cd functions/define-auth-challenge && go test -v
+      
+    - name: Test Verify Auth Challenge
+      run: cd functions/verify-auth-challenge && go test -v
+      
+    - name: Test Pre SignUp
+      run: cd functions/pre-signup && go test -v
