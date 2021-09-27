@@ -4,7 +4,7 @@ import * as iam from '@aws-cdk/aws-iam';
 import { GoFunction } from '@aws-cdk/aws-lambda-go';
 import * as cdk from '@aws-cdk/core';
 
-export interface PasswordlessProps {
+export interface IPasswordlessProps {
   clientName?: string;
 }
 
@@ -12,7 +12,7 @@ export class Passwordless extends cdk.Construct {
   public readonly userPool: cognito.UserPool
   public readonly userPoolClient: cognito.UserPoolClient;
 
-  constructor(scope: cdk.Construct, id: string, props: PasswordlessProps = {}) {
+  constructor(scope: cdk.Construct, id: string, props: IPasswordlessProps = {}) {
     super(scope, id);
 
     /**
