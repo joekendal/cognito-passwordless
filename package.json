@@ -1,5 +1,5 @@
 {
-  "name": "cognito-passwordless",
+  "name": "@joekendal/cognito-passwordless",
   "version": "0.1.0",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

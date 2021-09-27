@@ -1,1 +1,1 @@
-
+[![build](https://github.com/CloudClinics/cognito-passwordless/actions/workflows/build-construct.yml/badge.svg)](https://github.com/CloudClinics/cognito-passwordless/actions/workflows/build-construct.yml)
