@@ -1,5 +1,5 @@
 {
-  "name": "passwordless-auth",
+  "name": "cognito-passwordless",
   "description": "CDK construct for passwordless auth with AWS Cognito",
   "repository": {
     "type": "git",

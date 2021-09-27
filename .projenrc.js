@@ -5,7 +5,7 @@ const project = new AwsCdkConstructLibrary({
   authorAddress: '13680617+joekendal@users.noreply.github.com',
   cdkVersion: '1.124.0',
   defaultReleaseBranch: 'main',
-  name: 'passwordless-auth',
+  name: 'cognito-passwordless',
   repositoryUrl: 'git@github.com:joekendal/cognito-passwordless.git',
   keywords: ['aws', 'cognito', 'sms', 'phone'],
   cdkDependencies: [
