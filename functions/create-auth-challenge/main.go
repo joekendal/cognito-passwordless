@@ -30,6 +30,7 @@ func SendSMS(message string, phoneNumber string) error {
 	return err
 }
 
+// Generate random One-time Passcode (OTP)
 func GenerateOTP() (string, error) {
 	buffer := make([]byte, 6)
 	_, err := rand.Read(buffer)
