@@ -31,6 +31,7 @@ func TestHandler(t *testing.T) {
 	if err != nil {
 		log.Fatal(err)
 	}
+	// check response
 	if event.Response.PublicChallengeParameters["phone"] != testPhone {
 		log.Fatal("Expected phone number in public challenge params")
 	}
