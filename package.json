@@ -1,8 +1,8 @@
 {
   "name": "cognito-passwordless",
-  "version": "0.1.1",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "version": "0.1.2",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
@@ -23,5 +23,8 @@
     "@aws-cdk/aws-cognito": "^1.124.0",
     "@aws-cdk/aws-lambda-go": "^1.124.0",
     "@aws-cdk/core": "^1.124.0"
-  }
+  },
+  "files": [
+    "dist"
+  ]
 }
