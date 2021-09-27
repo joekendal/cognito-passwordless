@@ -3,6 +3,8 @@ package main
 import (
 	"log"
 
+	"crypto/rand"
+
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -28,6 +30,18 @@ func SendSMS(message string, phoneNumber string) error {
 	return err
 }
 
+func GenerateOTP() (string, error) {
+	buffer := make([]byte, 6)
+	_, err := rand.Read(buffer)
+	if err != nil {
+		return "", err
+	}
+	for i := 0; i < 6; i++ {
+		buffer[i] = "1234567890"[int(buffer[i])%10]
+	}
+	return string(buffer), nil
+}
+
 func Handler(event events.CognitoEventUserPoolsCreateAuthChallenge) (events.CognitoEventUserPoolsCreateAuthChallenge, error) {
 	phoneNumber := event.Request.UserAttributes["phone_number"]
 
@@ -35,8 +49,13 @@ func Handler(event events.CognitoEventUserPoolsCreateAuthChallenge) (events.Cogn
 	var secretCode string
 	if len(event.Request.Session) == 0 {
 		// generate a new secret login code and send it to user
-		secretCode = "1234"
-		err := SendSMS(secretCode, phoneNumber)
+		secretCode, err = GenerateOTP()
+		if err != nil {
+			// crypto failure
+			log.Print(err)
+			return event, err
+		}
+		err = SendSMS(secretCode, phoneNumber)
 		if err != nil {
 			// sms failure
 			log.Print(err)
