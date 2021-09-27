@@ -19,13 +19,13 @@ export class Passwordless extends cdk.Construct {
      * Lambda triggers
      */
     const preSignUp = new GoFunction(this, 'PreSignup', {
-      entry: 'src/pre-signup',
+      entry: 'functions/pre-signup',
     });
     const defineAuthChallenge = new GoFunction(this, 'DefineAuthChallenge', {
-      entry: 'src/define-auth-challenge',
+      entry: 'functions/define-auth-challenge',
     });
     const createAuthChallenge = new GoFunction(this, 'CreateAuthChallenge', {
-      entry: 'src/create-auth-challenge',
+      entry: 'functions/create-auth-challenge',
     }); // IAM permissions
     createAuthChallenge.addToRolePolicy(new iam.PolicyStatement({
       effect: iam.Effect.ALLOW,
@@ -33,7 +33,7 @@ export class Passwordless extends cdk.Construct {
       resources: ['*'],
     }));
     const verifyAuthChallenge = new GoFunction(this, 'VerifyAuthChallenge', {
-      entry: 'src/verify-auth-challenge',
+      entry: 'functions/verify-auth-challenge',
     });
 
     /**

@@ -14,5 +14,7 @@ const project = new AwsCdkConstructLibrary({
     '@aws-cdk/aws-lambda-go',
     '@aws-cdk/aws-iam',
   ],
+  projenrcTs: true,
+  npmignore: ["!/functions/"]
 });
 project.synth();
