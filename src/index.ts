@@ -60,6 +60,7 @@ export class Passwordless extends cdk.Construct {
         createAuthChallenge,
         verifyAuthChallengeResponse: verifyAuthChallenge,
       },
+      selfSignUpEnabled: true
     });
 
     /**
