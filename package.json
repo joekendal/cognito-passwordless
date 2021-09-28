@@ -62,7 +62,7 @@
     "@aws-cdk/aws-iam": "^1.124.0",
     "@aws-cdk/aws-lambda-go": "^1.124.0",
     "@aws-cdk/core": "^1.124.0",
-    "constructs": "^3.3.155"
+    "constructs": "^3.2.27"
   },
   "dependencies": {
     "@aws-cdk/aws-cognito": "^1.124.0",
